@@ -6,6 +6,7 @@
 package contractbyte;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +35,11 @@ public class Login extends javax.swing.JFrame {
        /* Border  min_close = BorderFactory.createMatteBorder(1,1,1,1,Color.black);
         jlabel_min.setBorder(min_close);
         jlabel_close_win.setBorder(min_close);*/
+       
+       
+       
+          //jframe icon
+          setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
 
     /**
@@ -313,4 +319,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jbt_login;
     private javax.swing.JLabel singup_jlabel;
     // End of variables declaration//GEN-END:variables
+
+    
 }

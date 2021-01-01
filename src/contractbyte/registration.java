@@ -5,6 +5,7 @@
  */
 package contractbyte;
 
+import java.awt.Toolkit;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,7 +23,10 @@ public class registration extends javax.swing.JFrame {
      */
     public registration() {
         initComponents();
+        // to center the window
           this.setLocationRelativeTo(null);
+          //jframe icon
+          setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
 
     /**

@@ -224,14 +224,14 @@ public class registration extends javax.swing.JFrame {
         
         
         PreparedStatement ps;
-        String query = "INSERT INTO `users`(`fullname`, `email`, `passw`) VALUES (?,?,?)";
+        String query = "INSERT INTO `users`(`id`,`fullname`, `email`, `passw`) VALUES (?,?,?,?)";
         
         try {
             ps =sqlcn.getConnection().prepareStatement(query);
-            
-            ps.setString(1, fullname);
-            ps.setString(2, email);
-            ps.setString(3,passw);
+            ps.setInt(1, 0);
+            ps.setString(2, fullname);
+            ps.setString(3, email);
+            ps.setString(4,passw);
             
             if(ps.executeUpdate()>0){
             

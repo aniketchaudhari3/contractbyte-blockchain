@@ -208,7 +208,7 @@ public class Login extends javax.swing.JFrame {
             
             if(rs.next())
             {
-                      homeframe mf = new homeframe();
+                    homeframe mf = new homeframe();
                     mf.setVisible(true);
                     mf.pack();
                     mf.setLocationRelativeTo(null);

@@ -5,6 +5,8 @@
  */
 package contractbyte;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author Ravindra
@@ -16,6 +18,10 @@ public class homeframe extends javax.swing.JFrame {
      */
     public homeframe() {
         initComponents();
+        // to center the window
+          this.setLocationRelativeTo(null);
+          //jframe icon
+          setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
 
     /**

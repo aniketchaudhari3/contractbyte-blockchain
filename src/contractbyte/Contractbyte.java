@@ -26,7 +26,7 @@ public class Contractbyte {
     try{
            
             for(int i= 0; i<= 100; i++){
-                 Thread.sleep(30);
+                 Thread.sleep(3);
                // Splashform.jLabel1.setText(i+"%");
                 Splashform.jProgressBar1.setValue(i);
             

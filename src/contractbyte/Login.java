@@ -16,6 +16,7 @@ import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.security.MessageDigest;
 
 
 /**
@@ -62,6 +63,7 @@ public class Login extends javax.swing.JFrame {
         jbt_login = new javax.swing.JButton();
         singup_jlabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jl_admin_login = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -116,12 +118,20 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/contractbyte/image/large_contractbyte.png"))); // NOI18N
 
+        jl_admin_login.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jl_admin_login.setText("Click here login as Admin ");
+        jl_admin_login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_admin_loginMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(170, Short.MAX_VALUE)
+                .addContainerGap(169, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,8 +145,13 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(144, 144, 144))))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jbt_login)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(jbt_login))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(279, 279, 279)
+                        .addComponent(jl_admin_login)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -156,7 +171,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jbt_login)
                 .addGap(18, 18, 18)
                 .addComponent(singup_jlabel)
-                .addGap(0, 41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jl_admin_login)
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -184,6 +201,37 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //paste akru na
+    
+  // hash generating fun
+    
+    public static String applySha256(String input) {
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            //Applies sha256 to our input, 
+            byte[] hash = digest.digest(input.getBytes("UTF-8"));
+
+            StringBuffer hexString = new StringBuffer(); // This will contain hash as hexidecimal
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    
+    
+    
+    
+    
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:dsadasd
         
@@ -201,10 +249,11 @@ public class Login extends javax.swing.JFrame {
         PreparedStatement ps;
         ResultSet rs;
         String email    = jTextField1.getText();
-        String passw     = String.valueOf(jPasswordField1.getPassword());
+        String passw     = applySha256(String.valueOf(jPasswordField1.getPassword()));
         
         String query = "SELECT * FROM `users` WHERE `email` =? AND `passw` =?";
         
+       // correct // wait try akru
        
         
         try {
@@ -271,6 +320,14 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_singup_jlabelMouseClicked
 
+    private void jl_admin_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_admin_loginMouseClicked
+        // TODO add your handling code here:
+         this.toBack();
+        adminlogin admin = new adminlogin();
+        admin.setVisible(true);
+        admin.toFront();
+    }//GEN-LAST:event_jl_admin_loginMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -317,6 +374,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton jbt_login;
+    private javax.swing.JLabel jl_admin_login;
     private javax.swing.JLabel singup_jlabel;
     // End of variables declaration//GEN-END:variables
 

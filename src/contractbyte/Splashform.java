@@ -5,6 +5,10 @@
  */
 package contractbyte;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+
 /**
  *
  * @author Ravindra
@@ -19,6 +23,12 @@ public class Splashform extends javax.swing.JFrame {
     public Splashform() {
         initComponents();
         // center the form
+        
+        
+        
+        // border for jpane splash screen
+        Border  min_close = BorderFactory.createMatteBorder(1,1,1,1,Color.black);
+        jPanel1.setBorder(min_close);
         
         
         
@@ -41,7 +51,6 @@ public class Splashform extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
         setUndecorated(true);
 
@@ -71,9 +80,6 @@ public class Splashform extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/contractbyte/image/loader5.gif"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 470, 220));
-
-        jLabel5.setText("jLabel5");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,7 +141,6 @@ public class Splashform extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JProgressBar jProgressBar1;
     // End of variables declaration//GEN-END:variables

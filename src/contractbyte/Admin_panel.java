@@ -7,6 +7,7 @@ package contrabyte;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.sql.*;
 
 /**
  *
@@ -18,25 +19,69 @@ public class Admin_panel extends javax.swing.JFrame {
     /**
      * Creates new form Admin_panel
      */
+    private String ccount;
+    private String ucount;
+    private String tcount;
+    private String icount;
+    
+    private String date[];
+    private String frm[];
+    private String to[];
+    private int cont_id[];
+    
+    
+    
     public Admin_panel() {
         initComponents();
-           this.setLocationRelativeTo(null);
-          //jframe icon
-          setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
+        this.setLocationRelativeTo(null);
+        //jframe icon
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
           
-          
+        try{ 
+           Class.forName("com.mysql.jdbc.Driver");  
+           Connection con=DriverManager.getConnection(  
+           "jdbc:mysql://localhost:3306/sonoo","root","root");  
+           //here sonoo is database name, root is username and password  should be changed
+            Statement stmt=con.createStatement();
+            String sql1 = "select contract_count, users_count, transaction_count, invalid_contracts_count from admin_data";
+            String sql2 = "select date, from user idt, to user id, contract_id from transaction";
+            ResultSet rs=stmt.executeQuery(sql1);  
+            
+            int i=1;
+           
+            ccount = rs.getString("contract_count");
+            ucount = rs.getString("users_count");
+            tcount = rs.getString("transaction_count");
+            icount = rs.getString("invalid_contracts_count");
+           
+            
+            rs=stmt.executeQuery(sql2);  
+            while(rs.next()){
+               date[i] = rs.getString("date");
+               frm[i] =  rs.getString("from user id");
+               to[i] = rs.getString("to user id");
+               cont_id[i] = rs.getInt("contract id");
+               i++;
+            }
+            
+            
+            
+        }catch(Exception e){
+            
+        }
           //initalize & Display the data
-          MailIds.setText("5");
-          ContractNo.setText("4");
-          UserNo.setText("5");;
+          invalid_cont.setText(icount);
+          ContractNo.setText(ccount);
+          UserNo.setText(ucount);
+          int i=1;
           //Load All contract Data & set Multiline Label for following
           jTable1.setModel(new javax.swing.table.DefaultTableModel(
                   new Object[][]{
                       //Use For Loop for filling data only for i<=4
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
+                      {i,frm[i],to[i],date[i]},
+                      {++i,frm[i],to[i],date[i]},
+                      {++i,frm[i],to[i],date[i]},
+                      {++i,frm[i],to[i],date[i]},
                   },
                   new String []{
                       "No","From","To","Contract Date"
@@ -66,7 +111,7 @@ public class Admin_panel extends javax.swing.JFrame {
         ContractNo = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        MailIds = new javax.swing.JLabel();
+        invalid_cont = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         ViewUsers = new javax.swing.JButton();
@@ -106,9 +151,9 @@ public class Admin_panel extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(UserNo)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         jLabel4.setText("Total Contracts");
@@ -138,29 +183,31 @@ public class Admin_panel extends javax.swing.JFrame {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        jLabel5.setText("Total Mails");
+        jLabel5.setText("Invalid Contracts");
 
-        MailIds.setText("jLabel7");
+        invalid_cont.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MailIds)
-                    .addComponent(jLabel5))
-                .addGap(31, 31, 31))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(20, 20, 20))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(invalid_cont)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addGap(26, 26, 26)
-                .addComponent(MailIds)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(invalid_cont)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -321,9 +368,9 @@ public class Admin_panel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ContractList;
     private javax.swing.JLabel ContractNo;
-    private javax.swing.JLabel MailIds;
     private javax.swing.JLabel UserNo;
     private javax.swing.JButton ViewUsers;
+    private javax.swing.JLabel invalid_cont;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

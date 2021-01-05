@@ -6,6 +6,11 @@
 package contrabyte;
 
 import java.awt.Toolkit;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  *
@@ -16,6 +21,11 @@ public class ViewAllUsers extends javax.swing.JFrame {
     /**
      * Creates new form ViewAllUsers
      */
+    private int id[];
+    private String email[];
+    private String name[];
+    int i=0,count=0;
+    
     public ViewAllUsers() {
         initComponents();
         
@@ -23,21 +33,47 @@ public class ViewAllUsers extends javax.swing.JFrame {
         //jframe icon
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                  new Object[][]{
-                      //Use For Loop for filling data only for i<=4
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                  },
-                  new String []{
-                      "No","Name","Email","Contracts"
-                  }
-          ));
+        
+        try{
+            
+            Class.forName("com.mysql.jdbc.Driver");  
+            Connection con=DriverManager.getConnection(  
+            "jdbc:mysql://localhost:3306/sonoo","root","root");  
+            //here sonoo is database name, root is username and password  should be changed
+            Statement stmt=con.createStatement();
+            String sql1 = "select id, email, fullname from users";
+            ResultSet rs=stmt.executeQuery(sql1); 
+            
+            
+            while(rs.next()){
+               id[i] = rs.getInt("id");
+               email[i] =  rs.getString("email");
+               name[i] = rs.getString("fullname");
+               i++;
+               count++;
+            }
+            
+        }catch(Exception e){
+            
+        }
+        
+        Object[] columns = {"No","Id","Name","Email"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(columns);
+        // set the model to the table
+        jTable1.setModel(model);
+        //jtable1.setForeground(Color.black);
+        Object[] row = new Object[4];
+        for(i=1;i<=count;i++){
+            row[0] = i;
+            row[1] = id[i];
+            row[2] = name[i];
+            row[3] = email[i];
+                
+            // add row to the model
+            model.addRow(row);
+        }
+       
     }
 
     /**

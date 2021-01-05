@@ -6,6 +6,11 @@
 package contrabyte;
 
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,27 +21,59 @@ public class ViewAllContracts extends javax.swing.JFrame {
     /**
      * Creates new form ViewAllContracts
      */
+    private int i=0,count=0;
+    private String date[];
+    private String frm[];
+    private String to[];
+    private String cont_id[];
+    
     public ViewAllContracts() {
         initComponents();
         this.setLocationRelativeTo(null);
         //jframe icon
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         
-         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                  new Object[][]{
-                      //Use For Loop for filling data only for i<=4
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                      {null,null,null,null},
-                  },
-                  new String []{
-                      "No","From","To","Contracts Date"
-                  }
-          ));
+         try{
+            
+            Class.forName("com.mysql.jdbc.Driver");  
+            Connection con=DriverManager.getConnection(  
+            "jdbc:mysql://localhost:3306/sonoo","root","root");  
+            //here sonoo is database name, root is username and password  should be changed
+            Statement stmt=con.createStatement();
+            String sql1 = "select date, from user id, to user id, contract_id from users";
+            ResultSet rs=stmt.executeQuery(sql1); 
+            
+            
+            while(rs.next()){
+               date[i] = rs.getString("date");
+               frm[i] = rs.getString("from user id");
+               to[i] =  rs.getString("to user id");
+               cont_id[i] = rs.getString("contract id");
+               i++;
+               count++;
+            }
+            
+        }catch(Exception e){
+            
+        }
+        
+        Object[] columns = {"No","Date","From","To","Contract Id"};
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(columns);
+        // set the model to the table
+        jTable1.setModel(model);
+        //jtable1.setForeground(Color.black);
+        Object[] row = new Object[5];
+        for(i=1;i<=count;i++){
+            row[0] = i;
+            row[1] = date[i];
+            row[2] = frm[i];
+            row[3] = to[i];
+            row[4] = cont_id[i];
+                
+            // add row to the model
+            model.addRow(row);
+        }
     }
 
     /**

@@ -18,36 +18,29 @@ public class Contractbyte {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        
-       Splashform splash = new  Splashform();
-    
-    splash.setVisible(true);
-    try{
-           
-            for(int i= 0; i<= 100; i++){
-                 Thread.sleep(3);
-               // Splashform.jLabel1.setText(i+"%");
-                Splashform.jProgressBar1.setValue(i);
-            
-                if(i==100){
-                    
+
+        Splashform splash = new Splashform();
+
+        splash.setVisible(true);
+        try {
+
+            for (int i = 0; i <= 100; i++) {
+                Thread.sleep(3);
+                // Splashform.jLabel1.setText(i+"%");
+                // Splashform.jProgressBar1.setValue(i);
+
+                if (i == 100) {
+
                     Login login = new Login();
-                  splash.setVisible(false);
-                  login.setVisible(true);
-                  
-            
+                    splash.setVisible(false);
+                    login.setVisible(true);
+
                 }
-            
+
             }
-            
-    }catch(Exception e){
-    }
+
+        } catch (Exception e) {
+        }
     }
 
-   
-                        
-                        
-                        
-    
 }

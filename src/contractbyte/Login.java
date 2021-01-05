@@ -269,7 +269,7 @@ public class Login extends javax.swing.JFrame {
                     mf.setVisible(true);
                     mf.pack();
                     mf.setLocationRelativeTo(null);
-                    mf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                 //   mf.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     this.dispose();
                         
             }else {
